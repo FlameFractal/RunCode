@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<link rel="stylesheet" type="text/css" href="../css/index.css">
+	<script src="jquery-2.2.3.js"></script>
+</head>
+<body>
+
+	<div id="topbar">
+		
+		<h2 id="logo">RunCode</h2>
+
+			<ul id="toggles">
+				<li class="toggle selected"  unselectable="on">HTML</li>
+				<li class="toggle selected"  unselectable="on">CSS</li>
+				<li class="toggle selected"  unselectable="on">JS</li>
+				<li class="toggle selected"  unselectable="on" style="border:none">Result</li>
+			</ul>	
+		
+
+		<div id="runbtn">
+			<button id="run">RUN</button>
+		</div>
+
+	</div>
+
+
+
+	<div class="codeContainer" id="HTMLContainer">
+
+		<div class="codeLabel">HTML</div>
+		<textarea id="htmlcode" placeholder="Type code here..."><!DOCTYPE html>
+<html>
+<head>
+	<title>Reaction Time</title>
+</head>
+
+<body>
+
+	<div id="container">
+		<h1 id="heading">REACTION TIME</h1>
+		<p class="mode"><a id='easy' href="#">EASY</a></p>
+		<p class="mode"><a id='hard' href="#">HARD</a></p>
+		<div class="clear"></div>
+		<div id="info">
+			<p>Click the shape as fast as you can</p>
+			<p id = "lasttime" class="bold">Last Time:  <span id="last">&lt;no-score&gt;</span></p>
+			<p id = "besttime">High Score: <span id="best">&lt;no-score&gt;</span></p>
+		</div>
+		<div id='box'></div>
+	</div>
+
+
+
+	
+
+	
+
+</body>
+</html></textarea>
+		
+	</div>
+
+
+	<div class="codeContainer" id="CSSContainer">
+
+		<div class="codeLabel">CSS</div>
+		<textarea id="csscode" placeholder="Type code here...">body{
+	font-family: Verdana;
+}
+
+.bold{
+	font-weight: bold;
+}
+
+#box{
+	position: relative;
+	height: 200px;
+	width: 200px;
+	border-radius: 0px;
+	background-color: orange;
+	visibility: hidden;
+}
+
+#lasttime, #besttime{
+	float: left;
+
+}
+
+#besttime{
+	padding-left: 15px;
+}
+
+a{
+	color:inherit;
+	text-decoration: none;
+	font-weight: bold;
+}
+
+#heading {
+	font-size: 4em;
+}
+
+a:hover{
+	color: blue !important;
+}
+
+
+.mode{
+	position: relative;
+	top:-50px;
+	font-size: 1.5em;
+	float:left;
+	padding-right: 10px;
+	font-style: italic;
+}
+
+#easy{
+	color: red;
+		padding-right: 10px;
+		padding-left: 5px;
+	border-right: 2px solid red;
+}
+
+.clear{
+	clear:both;
+}
+
+#info{
+	position: relative;
+	top:-45px;
+	margin-top:0px;
+	padding-left: 8px;
+}
+
+#info p{
+	margin-bottom: 0px;
+	padding-bottom: 0px;
+}</textarea>
+		
+	</div>
+
+
+	<div class="codeContainer" id="JSContainer">
+
+		<div class="codeLabel">JS</div>
+		<textarea id="jscode" placeholder="Type code here...">
+function getRandomColor() {
+	var letters = '0123456789ABCDEF'.split('');
+	var color = '#';
+	for (var i = 0; i < 6; i++ ) {
+		color += letters[Math.round(Math.random() * 15)];
+	}
+	return color;
+}
+
+
+var createdTime,clickedTime,reactionTime,bestTime=100;
+var disco =null;
+
+
+document.getElementById('box').onclick=function(){
+	clickedTime=Date.now();
+	reactionTime=(clickedTime-createdTime)/1000;
+	if(reactionTime<bestTime){
+		bestTime=reactionTime;
+	}
+	document.getElementById('best').innerHTML=bestTime+"s";
+	document.getElementById('last').innerHTML=reactionTime+"s";
+	document.getElementById('box').style.visibility="hidden";
+	setTimeout(makeBox,Math.random()*500);
+}
+
+
+
+
+function makeBox(){
+	document.getElementById('box').style.top=(Math.random()*300 + 100)+"px";
+	document.getElementById('box').style.left=(Math.random()*400)+"px";
+	var color=getRandomColor();
+	document.getElementById('box').style.backgroundColor=color;
+	document.getElementById('lasttime').style.color=color;
+	document.getElementById('box').style.borderRadius=(Math.random()*150)+"px";
+	document.getElementById('box').style.visibility="visible";	
+	createdTime=Date.now();
+}
+
+
+
+
+makeBox();
+
+
+document.getElementById('easy').onclick=function(){
+	clearInterval(disco);
+	document.getElementById('heading').innerHTML="REACTION TIME";
+	document.body.style.backgroundColor="transparent";
+	document.getElementById('easy').style.color="red";
+	document.getElementById('hard').style.color="black";
+}
+
+
+document.getElementById('hard').onclick=function(){
+	document.getElementById('heading').innerHTML="REACTION TIME (Hard mode)";
+	document.getElementById('hard').style.color="red";
+	document.getElementById('easy').style.color="black";
+	disco = setInterval(function(){
+		document.getElementById('heading').style.color=getRandomColor();
+		document.body.style.backgroundColor=getRandomColor();;
+	},75);
+
+}
+</textarea>
+		
+	</div>
+
+
+	<div class="codeContainer" id="ResultContainer">
+
+		<div class="codeLabel">Result</div>
+		<iframe class="iframe" id="resultframe"></iframe>		
+	</div>
+
+
+
+
+
+	<script type="text/javascript">
+		
+		$(".toggle").click(function(){
+			$(this).toggleClass("selected");
+
+			var type=$(this).html();
+
+			$('#'+type+'Container').toggle();
+
+			var active = $('.codeContainer').filter(function(){
+				return ($(this).css("display")!="none");
+			}).length;
+
+			width=100/active;
+
+			$('.codeContainer').width(width+"%");
+
+
+		});
+
+		$
+
+	</script>
+
+
+
+
+	<script type="text/javascript">
+		
+		$('#run').click(function(){
+			$(".iframe").contents().find("html").html('<style>'+$('#csscode').val()+' </style>'+$('#htmlcode').val());
+			document.getElementById("resultframe").contentWindow.eval($('#jscode').val());
+		});
+
+	</script>
+
+</body>
+</html>
